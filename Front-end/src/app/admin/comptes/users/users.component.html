@@ -1,0 +1,86 @@
+<div class="container-xl">
+    <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+            <li class="breadcrumb-item active">Gestion des Compte</li>
+        </ol>
+      </div>
+   <div class="table-responsive">
+       <div class="table-wrapper">
+           <div class="table-title">
+               <div class="row">
+                   
+                   <div class="col-sm-5">
+                       <h2>
+                        Gestion des <b> Utilisateurs</b></h2>
+                   </div>
+                   <div class="col-sm-7">
+                       <a routerLink="../new-user" class="btn btn-secondary" ><i class="material-icons">&#xE147;</i> <span>Ajouter nouveau utilisateur</span></a>
+                   </div>
+               </div>
+           </div>
+           <table class="table table-striped table-hover" >
+               <thead>
+                   <tr>
+                       <th>#</th>
+                       <th>Nom</th>						
+                       <th>Email</th>
+                       <th>Role</th>
+                       <th>Action</th>
+                   </tr>
+               </thead>
+               <tbody *ngFor="let u of pageUsers;let i = index">
+                   <tr>
+                       <td>{{i+1}}</td>
+                       <td>{{u.username}}</td> 
+                       <!-- <td><a href="#"><img src="/examples/images/avatar/1.jpg" class="avatar" alt="Avatar"> Michael Holz</a></td> -->
+                       <td>{{u.email}}</td>                        
+                       <td *ngFor="let groupe of u.roles">{{groupe.name}}</td>
+                       <td>
+                  <a  class="delete" title="Delete" data-toggle="tooltip"(click)="onDeleteUser(u)"><i class="material-icons">&#xE872;</i></a>
+                       </td>
+                   </tr>
+               </tbody>
+           </table>
+       </div>
+   </div>
+   <nav aria-label="Page navigation example">
+    <ul *ngIf="pages" class="pagination">
+      <li *ngFor="let p of pages;let i=index"  class="page-item" ><a (click)="gotoPage(i)" class="page-link">{{i+1}}</a></li>
+    </ul>
+  </nav>
+</div> 
+ <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter compte</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form  *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valide && onSubmit()" novalidate>
+            <div class="form-group">
+                <label class="control-label">Nom:</label>
+                <input  class="form-control" type="text" name="" name="nom" [(ngModel)]="form.username" #username="ngModel"required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Email:</label>
+                <input class="form-control" type="text" name="" name="email"[(ngModel)]="form.email" #email="ngModel" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Role</label>
+                <input  class="form-control" type="text" name="role" [(ngModel)]="form.role" #role="ngModel" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Password:</label>
+                <input class="form-control" type="text" name="password"  [(ngModel)]="form.password" #password="ngModel" required>
+            </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div> -->

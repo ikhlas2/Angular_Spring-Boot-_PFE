@@ -1,0 +1,69 @@
+
+<div class="container-fluid">
+  <div class="page-title-box">
+  <div class="page-title-right">
+    <ol class="breadcrumb m-0">
+        <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+        <li class="breadcrumb-item"><a routerLink="../users" href="javascript: void(0);">Comptes</a></li>
+        <li class="breadcrumb-item active">Nouveau compte</li>
+    </ol>
+  </div>
+  <h4 class="page-title">Nouveau Compte</h4>
+<div class="btn-toolbar">
+</div><br>
+<div class="container spacer" >  
+    <div class="panel panel-primary" *ngIf="mode==1"style="height:400px;">
+    <div>    
+        <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()"  #f="ngForm"novalidate>
+        <div class="form-group " style="width:500px;margin-left:100px;">
+            <label class="control-label">Nom:</label>
+          <input type="text" class="form-control" name="username"  minlength="3" maxlength="20" [(ngModel)]="form.username" required #username="ngModel" />
+          <div class="alert-danger" *ngIf="f.submitted && username.invalid">
+            <div *ngIf="username.errors.required">Username is required</div>
+            <div *ngIf="username.errors.minlength">
+              Username must be at least 3 characters
+            </div>
+            <div *ngIf="username.errors.maxlength">
+              Username must be at most 20 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group form-box" style="width:500px;margin-left:100px;">
+            <label class="control-label">Email:</label>
+          <input
+            type="email" class="form-control" name="email" [(ngModel)]="form.email" required email #email="ngModel" />
+          <div class="alert-danger" *ngIf="f.submitted && email.invalid">
+            <div *ngIf="email.errors.required">Email is required</div>
+            <div *ngIf="email.errors.email">
+              Email must be a valid email address
+            </div>
+          </div>
+        </div>
+        <div class="form-group form-box clearfix" style="width:500px;margin-left:100px;">
+            <label class="control-label">password:</label>
+          <input type="password"  class="form-control" name="password" [(ngModel)]="form.password" required  minlength="6" #password="ngModel" />
+          <div class="alert-danger" *ngIf="f.submitted && password.invalid">
+            <div *ngIf="password.errors.required">Password is required</div>
+            <div *ngIf="password.errors.minlength">
+              Password must be at least 6 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group form-box clearfix" style="width:500px;margin-left:100px;">
+            <label for="example-select">Rôle</label>
+            <select class="form-control" [(ngModel)]="form.role" name="role"
+            required>
+                <option>Admin</option>
+                <option>User</option>
+                <option>Technicien</option>
+            </select>
+        </div>
+        <div class="form-group clearfix">
+          <button type="submit" class="btn btn-success" style="margin-right: 13px;"><i class=" uil-check"></i>Ajouter</button>
+          <button (click)="annuler()" type="reset" class="btn btn-danger" ><i class=" uil-times"></i> Annuler</button>
+      </div>
+        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+          Signup failed!<br />{{ errorMessage }}
+        </div>
+      </form>
+   

@@ -1,0 +1,53 @@
+<div class="limiter">
+  <div class="container-login100">
+  <div class="wrap-login100">
+  <div class="login100-form-title" style="background-image: url(/assets/images/bg-01.jpg);">
+  <span class="login100-form-title-1">
+Inscription
+  </span>
+  </div>
+<form class="login100-form validate-form" *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()"#f="ngForm"novalidate>
+  <!-- Username -->
+  <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+  <span class="label-input100">Nom</span>
+  <input  class="input100" type="text" class="form-control" placeholder="Enter nom"  name="username" [(ngModel)]="form.username"required minlength="3" maxlength="20" #username="ngModel"/>
+  <div class="alert-danger" *ngIf="f.submitted && username.invalid">
+  <div *ngIf="username.errors.required">Username is required</div>
+  <div *ngIf="username.errors.minlength">Username must be at least 3 characters</div>
+  <div *ngIf="username.errors.maxlength">Username must be at most 20 characters</div>
+  <span class="focus-input100"></span>
+</div>
+</div>
+<!-- Email -->
+<div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
+<span class="label-input100">Email</span>
+<input class="input100" type="email" class="form-control" placeholder="Enter email"  name="email" [(ngModel)]="form.email"required email #email="ngModel"/>
+<div class="alert-danger" *ngIf="f.submitted && email.invalid">
+<div *ngIf="email.errors.required">Email is required</div>
+<div *ngIf="email.errors.email">Email must be a valid email address</div>
+<span class="focus-input100"></span>
+</div>
+</div>
+<!-- Password -->
+<div class="wrap-input100 validate-input m-b-26" data-validate="Password is required">
+  <span class="label-input100">Password</span>
+  <input type="password" class="form-control" placeholder="Enter password" name="password" [(ngModel)]="form.password" required minlength="6"#password="ngModel"/>
+<div class="alert-danger" *ngIf="f.submitted && password.invalid">
+<div *ngIf="password.errors.required">Password is required</div>
+<div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+</div>
+</div>
+<!-- Button -->
+<div class="container-login100-form-btn">
+  <button class="login100-form-btn">Inscription</button>
+ </div>
+ <!-- Msg Signup failed -->
+ <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">L'inscription a échoué!<br />{{ errorMessage }}</div>
+ <!-- Msg Signup successful -->
+<div class="alert alert-success" *ngIf="isSuccessful">Votre inscription est réussie!</div>
+<br>
+<br>
+<div><a [routerLink]="['/login']" class="txt1">Utilisateur existant? Connectez-vous ici</a></div>
+</form>
+</div>
+</div>

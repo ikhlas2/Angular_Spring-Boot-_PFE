@@ -1,0 +1,168 @@
+
+  <div class="main-content">
+    <div class="container mt-7">
+      <!-- Table -->
+   <!--    <h2 class="mb-5">Tables Example</h2> -->
+      <div class="row">
+
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <h3 class="mb-0">Liste Ticket</h3>
+            </div>
+            <div class="input-group">
+              <input type="text" [(ngModel)]="motCle" class="form-control" placeholder="search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)="chercher()">Chercher</button>
+              </div>
+            </div> 
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush" *ngIf="pageTickets">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">nom</th>
+                    <th scope="col">prenom</th>
+                    <th scope="col">nomSociete</th>
+                    <th scope="col">email</th>
+                    <th scope="col">date</th>
+                    <th scope="col">status</th>
+                    <th scope="col">type</th>
+                    <th scope="col">commentaire</th>
+                    <th scope="col">priorite</th>
+                    <th scope="col">tel</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let c of pageTickets._embedded.tickets;let i = index">
+                    <td>{{i+1}}</td>
+                     <td>{{c.nom}}</td>
+                     <td>{{c.prenom}}</td>
+                     <td>{{c.nomSociete}}</td>
+                     <td>{{c.email}}</td>
+                     <td>{{c.date}}</td>
+                     <td [ngClass]="{
+                      'text-success':c.status === 'En cours',
+                      'text-primary':c.status === 'Validé',
+                      'text-danger':c.status === 'Terminé'}">
+                      {{ c.status }} 
+                  </td>
+                     <td>{{c.type}}</td>
+                     <td>{{c.commentaire}}</td>
+                     <td [ngClass]="{
+                      'text-success':c.priorite === 'Normale',
+                      'text-primary':c.priorite === 'Moyenne',
+                      'text-danger':c.priorite === 'faible'}">
+                      {{c.priorite}}</td>
+                     <td>{{c.tel}}</td>
+                     <!-- <td scope="col">
+                         <a data-toggle="modal" data-target="#exampleModal" (click)="onEditTicket(c._links.ticket.href)"><i class="fas fa-edit" >Edit</i> </a>
+                         <a (click)="onDeleteTickets(c._links.ticket.href)"><i class="fas fa-trash-alt">Delete</i></a>
+                         <a *ngIf="c.accepted===false" (click)="onAceptTickets(c._links.ticket.href)"><i class="fas fa-edit" >Accepter</i> </a>
+                     </td> -->
+                     <td scope="col">
+                       
+                      <a  class="view" title="Accepter" data-toggle="tooltip"*ngIf="c.accepted===false" (click)="onAceptTickets(c._links.ticket.href)"><i class="material-icons">&#xe834;</i></a>
+                      <a  class="edit" title="Edit" data-toggle="tooltip" data-toggle="modal" data-target="#exampleModal" (click)="onEditTicket(c._links.ticket.href)"><i class="material-icons">&#xE254;</i></a>
+                      <a  class="delete" title="Delete" data-toggle="tooltip"(click)="onDeleteTickets(c._links.ticket.href)"><i class="material-icons">&#xE872;</i></a>
+                  </td>
+                 </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- pagination -->
+            <nav aria-label="Page navigation example">
+              <ul *ngIf="pages" class="pagination">
+                <li *ngFor="let p of pages;let i=index"  class="page-item" ><a (click)="gotoPage(i)" class="page-link">{{i+1}}</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modifier Ticket</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"  *ngIf="currentTicket">
+          <!-- {{ticketid}} -->
+          <form #f="ngForm" (ngSubmit)="onUpdateTicket(f.value)">
+            <div class="form-group">
+                <label class="control-label">Nom:</label>
+                <input  [(ngModel)]="currentTicket.nom" #nom="ngModel" class="form-control" type="text" name="" ngModel name="nom" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Prenom:</label>
+                <input  [(ngModel)]="currentTicket.prenom" #prenom="ngModel" class="form-control" type="text" name="" ngModel name="prenom" required>
+            </div>
+            <div div class="form-group">
+                <label class="control-label">Nom Societe:</label>
+                <select  [(ngModel)]="currentTicket.nomSociete"#nomSociete="ngModel" class="form-control" ngModel name="nomSociete" required >
+                    <option>Netuse</option>
+                    <option>HouseInfo</option>
+                    <option>ULT</option>
+                    <option>OMPV</option>
+                    <option>BIAT</option>
+                    <option>TELECOM</option>
+                    </select>
+             </div>
+            <div class="form-group">
+                <label class="control-label">Email:</label>
+                <input [(ngModel)]="currentTicket.email" #email="ngModel" class="form-control" type="email" name="" ngModel name="email" required >
+            </div>
+            <div class="form-group">
+                <label class="control-label">Date:</label>
+                <input [(ngModel)]="currentTicket.date" #date="ngModel"class="form-control" type="date" name="" ngModel name="date" required >
+            </div>
+            <div class="form-group">
+                <label class="control-labes">Statuts:</label>
+                <select [(ngModel)]="currentTicket.status" #status="ngModel" class="form-control" ngModel name="status" required >
+                  <option>En cours</option>
+                  <option>Validé</option>
+                  <option>Terminé</option>
+                </select>
+              </div>
+            <div class="form-group">
+                <label class="control-label">Type:</label>
+                <select [(ngModel)]="currentTicket.type" #type="ngModel" class="form-control" ngModel name="type" required >
+                  <option>Software</option>
+                  <option>Hardware</option>
+                </select>
+                </div>
+            <div class="form-group">
+                <label class="control-label">Commentaire:</label>
+                <textarea [(ngModel)]="currentTicket.commentaire" #commentaire="ngModel" class="form-control" cols="30" rows="10" ngModel name="commentaire" required>
+                </textarea>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Priorite:</label>
+                <select  [(ngModel)]="currentTicket.priorite" #priorite="ngModel" class="form-control" ngModel name="priorite" required >
+                    <option>Normale</option>
+                     <option>Moyenne</option>
+                     <option>faible</option>
+                    </select>
+            </div>
+  
+            <div class="form-group">
+                <label class="control-label">Tel:</label>
+                <input [(ngModel)]="currentTicket.tel" #tel="ngModel" class="form-control" type="text" name="" ngModel name="tel" required>
+            </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+

@@ -1,0 +1,183 @@
+
+ <!-- Tickets -->
+
+<div class="limiter">
+  <div class="container-login100" >
+   <div class="wrap-login100">
+   <div class="login100-form-title" style="background-image: url(/assets/images/bg-01.jpg);">
+  <!-- <span class="login100-form-title-1">Ticket</span> -->
+</div> 
+
+<div class="login100-form validate-form">
+  <div *ngIf="mode==1">
+    <!-- <a data-toggle="modal" data-target="#exampleModal" ><i class="btn-primary"></i>historique </a> -->
+<!-- Nom -->
+<div class="wrap-input100 validate-input m-b-26">
+ <span class="label-input100">Nom:</span>
+  <input class="input100" type="text"  placeholder="Enter nom" [(ngModel)]="ticket.nom"  >
+  <span class="focus-input100"></span>
+</div>
+<!-- Prenom -->
+<div class="wrap-input100 validate-input m-b-26" >
+<span class="label-input100">Prenom</span>
+<input class="input100" type="text"  placeholder="Enter prenom"[(ngModel)]="ticket.prenom"  >
+<span class="focus-input100"></span>
+</div> 
+<!-- Nom Societe: -->
+<div class="wrap-input100 validate-input m-b-26" >
+  <span class="label-input100">Nom Societe:</span>
+  <select class="input100"[(ngModel)]="ticket.nomSociete">
+  <option>Netuse</option>
+  <option>HouseInfo</option>
+  <option>ULT</option>
+</select>
+  <span class="focus-input100"></span>
+  </div>
+  <!-- Email: -->
+ <div class="wrap-input100 validate-input m-b-26" >
+    <span class="label-input100">Email</span>
+    <input class="input100" type="text" placeholder="Enter Email"[(ngModel)]="ticket.email"  >
+    <span class="focus-input100"></span>
+    </div>
+  <!-- Date:: -->
+  <div class="wrap-input100 validate-input m-b-26" >
+      <span class="label-input100">Date:</span>
+      <input class="input100" type="date" placeholder="Enter Date:" [(ngModel)]="ticket.date" >
+      <span class="focus-input100"></span>
+      </div>
+  <!-- Type: -->
+      <div class="wrap-input100 validate-input m-b-26">
+        <span class="label-input100">Type:</span>
+        <select class="input100" [(ngModel)]="ticket.type">
+          <option>Securité</option>
+          <option>panne clavier</option>
+        </select>
+        <span class="focus-input100"></span>
+        </div>
+  <!-- Commentaire: -->
+    <div class="wrap-input100 validate-input m-b-26" >
+      <span class="label-input100">Commentaire:</span>
+      <textarea class="input100"  cols="30" rows="10" [(ngModel)]="ticket.commentaire"></textarea>
+      <span class="focus-input100"></span>
+      </div>
+  <!-- Priorite: -->
+        <div class="wrap-input100 validate-input m-b-26">
+          <span class="label-input100">Priorite:</span>
+          <select class="input100" [(ngModel)]="ticket.priorite">
+            <option>Normale</option>
+            <option>Moyenne</option>
+            <option>faible</option>
+          </select>
+          <span class="focus-input100"></span>
+          </div>
+  <!-- Tel: -->
+        <div class="wrap-input100 validate-input m-b-26">
+          <span class="label-input100">Tel:</span>
+          <input class="input100" type="text"  placeholder="Enter tel:" [(ngModel)]="ticket.tel"  >
+          <span class="focus-input100"></span>
+          </div>
+<div class="container-login100-form-btn">
+  <button class="login100-form-btn" (click)="saveTicket()">Enregistrer</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+  <!-- Partie confirmation: -->
+
+<div class="panl panel-primary" *ngIf="mode==2">
+  <div class="panel-heading">Confirmation</div>
+  <div class="panel-body">
+  <div>
+  <div class="form-group">
+  <label class="control-labes">Id:</label>
+  <label>{{ticket.id}}</label>
+  </div>
+  <div class="form-group">
+  <label class="control-labes">Nom:</label>
+    <label>{{ticket.nom}}</label>
+  </div>
+  <div class="form-group">
+    <label class="control-labes">Prenom:</label>
+    <label>{{ticket.prenom}}</label>
+  </div>
+  <div class="form-group">
+    <label class="control-labes">Nom Societe:</label>
+    <label>{{ticket.nomSociete}}</label>
+  </div>
+  <div class="form-group">
+    <label class="control-labes">email:</label>
+    <label>{{ticket.email}}</label>
+  </div>
+  <div class="form-group">
+    <label class="control-labes">Date:</label>
+    <label>{{ticket.date}}</label>
+  </div>
+  <div class="form-group">
+    <label class="control-labes">Type:</label>
+    <label>{{ticket.type}}</label>
+  </div>
+  <div class="form-group">
+    <label class="control-labes">Commentaire:</label>
+    <label>{{ticket.commentaire}}</label>
+  </div>
+  <div class="form-group">
+    <label class="control-labes">Priorite:</label>
+    <label>{{ticket.priorite}}</label>
+  </div>
+  <div class="form-group">
+    <label class="control-labes">Tel:</label>
+    <label>{{ticket.tel}}</label>
+  </div>
+  <button class="btn btn-primary"(click)="mode=1">Nouveau Ticket</button>
+        </div>
+        </div>
+    </div>
+
+<!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Historique Ticket</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!-- <table class="table" *ngIf="pageTickets" class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">nom</th>
+                <th scope="col">prenom</th>
+                <th scope="col">nomSociete</th>
+                <th scope="col">email</th>
+                <th scope="col">date</th>
+                <th scope="col">status</th>
+                <th scope="col">type</th>
+                <th scope="col">commentaire</th>
+                <th scope="col">priorite</th>
+                <th scope="col">tel</th>
+                <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of pageTickets._embedded.tickets">
+                <td>{{c.id}}</td>
+                <td>{{c.nom}}</td>
+                <td>{{c.prenom}}</td>
+                <td>{{c.nomSociete}}</td>
+                <td>{{c.email}}</td>
+                <td>{{c.date}}</td>
+                <td>{{c.status}}</td>
+                <td>{{c.type}}</td>
+                <td>{{c.commentaire}}</td>
+                <td>{{c.priorite}}</td>
+                <td>{{c.tel}}</td>
+            </tr>
+          </tbody>
+          </table> -->
+        </div>
+      </div>
+    </div>

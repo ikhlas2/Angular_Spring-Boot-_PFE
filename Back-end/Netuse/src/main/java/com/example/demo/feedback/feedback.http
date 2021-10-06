@@ -1,0 +1,10 @@
+POST http://localhost:8080/feedback
+Content-Type: application/json
+
+{
+  "name": "ikhlas",
+  "email": "ikhlas.jouini@ult-tunisie.com",
+  "feedback": "You app is awesome :)"
+}
+
+###
